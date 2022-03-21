@@ -123,7 +123,7 @@ function Checkin() {
         }
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
-        console.log(`签到返回: ${obj}`)
+        console.log(`签到返回: ${data}`)
         try {
             if (obj.msg === "成功") {
               if (obj.data.signInfo.code === "A00000") {
