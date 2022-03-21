@@ -19,9 +19,9 @@ async function downFile () {
 }
 
 async function changeFiele () {
-    let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
+    let content = await fs.readFileSync(`${__dirname}/iQIYI-bak.js`, 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
+    await fs.writeFileSync( `${__dirname}/iQIYI-bak.js`, content, 'utf8')
 }
 
 async function deleteFile(path) {
@@ -47,7 +47,7 @@ async function start() {
     await changeFiele();
     console.log('替换变量完毕')
     // 执行
-    await exec("node iQIYI-bak.js >> result.txt");
+    await exec(`node ${__dirname}/iQIYI-bak.js >> result.txt`);
     console.log('执行完毕')
     const path = "./result.txt";
     let content = "";
