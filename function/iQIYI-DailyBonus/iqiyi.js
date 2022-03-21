@@ -9,7 +9,7 @@ const $ = new Env('爱奇艺会员签到');
 const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
 const KEY = process.env.iQIYI_COOKIE
-console.log('KEY: ', KEY)
+//console.log('KEY: ', KEY)
 const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
@@ -35,14 +35,14 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    console.log('KEY2: ', KEY)
+    console.log('KEY: ', KEY)
     if (!KEY) {
         console.log('请填写 key 后在继续')
         return
     }
     // 下载最新代码
-    await downFile();
-    console.log('下载代码完毕')
+    //await downFile();
+    //console.log('下载代码完毕')
     // 替换变量
     await changeFiele();
     console.log('替换变量完毕')
