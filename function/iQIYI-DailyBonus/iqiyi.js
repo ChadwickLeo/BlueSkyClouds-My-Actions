@@ -15,7 +15,7 @@ const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*6
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
-    #const url = 'https://raw.githubusercontent.com/BlueSkyClouds/My-Actions/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
+    //const url = 'https://raw.githubusercontent.com/BlueSkyClouds/My-Actions/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
     await download(url, './')
 }
 
