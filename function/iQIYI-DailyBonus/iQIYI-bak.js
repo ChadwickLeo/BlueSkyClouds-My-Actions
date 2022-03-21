@@ -124,20 +124,25 @@ function Checkin() {
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
         console.log(`签到返回: ${obj}`)
-        if (obj.msg === "成功") {
-          if (obj.data.signInfo.code === "A00000") {
-            var AwardName = obj.data.signInfo.data.rewards[0].name;
-            var quantity = obj.data.signInfo.data.rewards[0].value;
-            var continued = obj.data.signInfo.data.continueSignDaysSum;
-            $nobyda.data = "签到成功: " + AwardName + quantity + ", 已连签" + continued + "天 🎉"
-            console.log(`爱奇艺-${$nobyda.data} ${Details}`)
-          } else {
-            $nobyda.data = "签到失败: " + obj.data.signInfo.msg + " ⚠️"
-            console.log(`爱奇艺-${$nobyda.data} ${Details}`)
-          }
-        } else {
-          $nobyda.data = "签到失败: Cookie无效 ⚠️"
-          console.log(`爱奇艺-${$nobyda.data} ${Details}`)
+        try {
+            if (obj.msg === "成功") {
+              if (obj.data.signInfo.code === "A00000") {
+                var AwardName = obj.data.signInfo.data.rewards[0].name;
+                var quantity = obj.data.signInfo.data.rewards[0].value;
+                var continued = obj.data.signInfo.data.continueSignDaysSum;
+                $nobyda.data = "签到成功: " + AwardName + quantity + ", 已连签" + continued + "天 🎉"
+                console.log(`爱奇艺-${$nobyda.data} ${Details}`)
+              } else {
+                $nobyda.data = "签到失败: " + obj.data.signInfo.msg + " ⚠️"
+                console.log(`爱奇艺-${$nobyda.data} ${Details}`)
+              }
+            } else {
+              $nobyda.data = "签到失败: Cookie无效 ⚠️"
+              console.log(`爱奇艺-${$nobyda.data} ${Details}`)
+            }
+        } catch(e) {
+            console.log('签到异常：'+e);
+            return false;
         }
       }
       resolve()
