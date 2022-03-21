@@ -14,15 +14,16 @@ const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/BlueSkyClouds/My-Actions/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
+    const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
+    #const url = 'https://raw.githubusercontent.com/BlueSkyClouds/My-Actions/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
     await download(url, './')
 }
 
 async function changeFiele () {
     console.log('iQIYI-bak.js path: ', `${__dirname}/iQIYI-bak.js`)
-    let content = await fs.readFileSync(`${__dirname}/iQIYI-bak.js`, 'utf8')
+    let content = await fs.readFileSync(`./iQIYI-bak.js`, 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    await fs.writeFileSync( `${__dirname}/iQIYI-bak.js`, content, 'utf8')
+    await fs.writeFileSync( `./iQIYI-bak.js`, content, 'utf8')
 }
 
 async function deleteFile(path) {
@@ -42,13 +43,13 @@ async function start() {
         return
     }
     // 下载最新代码
-    //await downFile();
-    //console.log('下载代码完毕')
+    await downFile();
+    console.log('下载代码完毕')
     // 替换变量
     await changeFiele();
     console.log('替换变量完毕')
     // 执行
-    await exec(`node ${__dirname}/iQIYI-bak.js >> result.txt`);
+    await exec(`node iQIYI-bak.js >> result.txt`);
     console.log('执行完毕')
     const path = "./result.txt";
     let content = "";
