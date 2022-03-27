@@ -36,7 +36,10 @@ def login(user, password):
         "token": "access"
     }
     r1 = requests.post(url1, data=data1, headers=headers, allow_redirects=False)
-    print("登录返回"+str(r1))
+    
+    if r1.status_code != 200:
+        print(f"签到失败: 返回码{r1.status_code}错误原因{r1.reason}")
+    print("登录返回"+str(r1.text))
     location = r1.headers["Location"]
     try:
         code = get_code(location)
