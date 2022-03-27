@@ -152,6 +152,10 @@ def wps_webpage_clockin(sid: str):
         if r.history[0].status_code == 302:
             sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
             return 0
+        elif r.history[0].status_code != 200:
+            print(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}")
+            sio.write(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}\n\n")
+            return 0
     resp = json.loads(r.text)
     # 判断是否已打卡
     if resp['msg'] == '已完成签到':
@@ -244,6 +248,10 @@ def wps_webpage_taskreward(sid: str):
         if r.history[0].status_code == 302:
             sio.write("任务检查失败: 用户sid错误, 请重新输入\n\n")
             return 0
+        elif r.history[0].status_code != 200:
+            print(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}")
+            sio.write(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}\n\n")
+            return 0
     resp = json.loads(r.text)
     # 完善账户信息任务检查
     resplist = ([resp['data']['1']['task'], resp['data']['2']['task'],
@@ -290,11 +298,13 @@ def docer_webpage_clockin(sid: str):
     sio.write("\n\n          ---稻壳网页签到---↓\n\n")
     docer_url = 'https://zt.wps.cn/2018/docer_check_in/api/checkin_today'
     r = s.post(docer_url, headers={'sid': sid})
-    print("签到返回"+str(r))
-    return 0
+    print("签到返回"+str(r.text))
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
             sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
+            return 0
+        elif r.history[0].status_code != 200:
+            sio.write(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}\n\n")
             return 0
     resp = json.loads(r.text)
     if resp['result'] == 'ok':
@@ -384,6 +394,10 @@ def wps_miniprogram_clockin(sid: str):
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
             sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
+            return 0
+        elif r.history[0].status_code != 200:
+            print(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}")
+            sio.write(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}\n\n")
             return 0
     resp = json.loads(r.text)
     # 判断是否已打卡
