@@ -290,13 +290,11 @@ def docer_webpage_clockin(sid: str):
     sio.write("\n\n          ---稻壳网页签到---↓\n\n")
     docer_url = 'https://zt.wps.cn/2018/docer_check_in/api/checkin_today'
     r = s.post(docer_url, headers={'sid': sid})
+    sio.write("签到返回: {}\n".format(str(r)))
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
             sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
             return 0
-    if not r.text:
-        sio.write("签到返回空:"+str(r.history[0]))
-        return 0
     resp = json.loads(r.text)
     if resp['result'] == 'ok':
         sio.write("签到信息: {}\n\n".format(r.text))
