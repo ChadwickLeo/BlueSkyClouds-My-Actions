@@ -389,13 +389,11 @@ def wps_miniprogram_clockin(sid: str):
     # 打卡签到
     clockin_url = 'http://zt.wps.cn/2018/clock_in/api/clock_in'
     r = s.get(clockin_url, headers={'sid': sid})
+    print(f"签到返回{r.status_code}[{r.reason}]报文头{str(r.headers)}，报文体{r.text}")
+    if r.status_code != 200: return 0
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
             sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
-            return 0
-        elif r.history[0].status_code != 200:
-            print(f"签到失败: 返回码{r.history[0].status_code}\n报文头{str(r.history[0].headers)}\n报文体{r.history[0].text}")
-            sio.write(f"签到失败: 返回码{r.history[0].status_code}错误原因{r.history[0].reason}\n\n")
             return 0
     resp = json.loads(r.text)
     # 判断是否已打卡
